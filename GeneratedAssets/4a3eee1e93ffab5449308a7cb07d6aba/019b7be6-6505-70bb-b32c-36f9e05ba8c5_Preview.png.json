@@ -1,0 +1,11 @@
+{
+    "asset": "4a3eee1e93ffab5449308a7cb07d6aba",
+    "fileName": "019b7be6-6505-70bb-b32c-36f9e05ba8c5_Preview.png",
+    "prompt": "Seamless tileable material texture of stylized worn silver metal, low poly game art style. Monochromatic grey palette only. Hand-painted aesthetic with chunky scratches and weathered details. Flat lighting, no cast shadows, perfect for tiling. Clean, minimalist, matte finish. No dirt, no rust.",
+    "negativePrompt": "Seams, borders, edges, non-tileable, photorealistic, noise, grain, rust, dirt, brown, green, colors, high contrast, harsh shadows, glossy reflection, complex patterns, organic textures.",
+    "model": "44ec3749-963a-44b1-aa54-dc19f6ed8ab2",
+    "modelName": "Unity Texture2D",
+    "customSeed": 2110239396,
+    "w3CTraceId": "f0e8904fa7257730fecf093305790ad0",
+    "refinementMode": "Generation"
+}
