@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class TejoDetector : MonoBehaviour
@@ -32,23 +33,21 @@ public class TejoDetector : MonoBehaviour
             string nombreMecha = other.gameObject.name;
 
             // Lógica para activar el humo correspondiente según el nombre del objeto
-            // Nota: usamos .Contains por si el nombre tiene algo como "(Clone)" al final
-            if (nombreMecha == "Mecha1")
+            if (nombreMecha == "mecha1")
             {
-                if (smoke1 != null) smoke1.Emit();
+                smoke1.Play();
             }
-            else if (nombreMecha == "Mecha2")
+            else if (nombreMecha == "mecha2")
             {
-                if (smoke2 != null) smoke2.Emit();
+                smoke2.Play();
             }
-            else if (nombreMecha == "Mecha3")
+            else if (nombreMecha == "mecha3")
             {
-                if (smoke3 != null) smoke3.Emit();
+                smoke3.Play();
             }
 
             Debug.Log("Mecha tocada: " + nombreMecha);
             
-            // Destruir la mecha detectada
             Destroy(other.gameObject);
         }
     }
