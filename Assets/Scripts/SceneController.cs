@@ -9,27 +9,25 @@ public class SceneController : MonoBehaviour
     [SerializeField] private Image fadePanel;
     [SerializeField] private float fadeSpeed = 1.0f;
 
+    private bool isTransitioning = false;
+
     private void Start()
     {
-        // Al iniciar, si el panel está oscuro, hacemos el efecto de aclarado
         if (fadePanel != null)
         {
             StartCoroutine(FadeInRoutine());
         }
     }
 
-    // --- PUBLIC METHODS (Para los botones) ---
 
     public void PlayGame()
     {
-        // Carga la escena 1 (Game)
-        StartCoroutine(TransitionToSceneRoutine(1));
+        TryTransitionToScene(1);
     }
 
     public void PlayMenu()
     {
-        // Carga la escena 0 (Menu)
-        SceneManager.LoadScene(0);
+        TryTransitionToScene(0);
     }
 
     public void QuitGame()
@@ -42,9 +40,6 @@ public class SceneController : MonoBehaviour
         #endif
     }
 
-    // --- PRIVATE COROUTINES (Lógica interna) ---
-
-    // FadeIn: De Negro a Transparente
     private IEnumerator FadeInRoutine()
     {
         float alpha = 1.0f;
@@ -57,9 +52,14 @@ public class SceneController : MonoBehaviour
         fadePanel.gameObject.SetActive(false);
     }
 
-    // FadeOut: De Transparente a Negro y cambio de escena
     private IEnumerator TransitionToSceneRoutine(int sceneIndex)
     {
+        if (fadePanel == null)
+        {
+            SceneManager.LoadScene(sceneIndex);
+            yield break;
+        }
+
         fadePanel.gameObject.SetActive(true);
         float alpha = 0.0f;
         while (alpha < 1)
@@ -79,5 +79,34 @@ public class SceneController : MonoBehaviour
             color.a = Mathf.Clamp01(value);
             fadePanel.color = color;
         }
+    }
+
+    private void TryTransitionToScene(int sceneIndex)
+    {
+        if (isTransitioning)
+        {
+            return;
+        }
+
+        if (!IsValidSceneIndex(sceneIndex))
+        {
+            Debug.LogError($"Scene index {sceneIndex} is not valid.");
+            return;
+        }
+
+        isTransitioning = true;
+
+        if (fadePanel != null)
+        {
+            StartCoroutine(TransitionToSceneRoutine(sceneIndex));
+            return;
+        }
+
+        SceneManager.LoadScene(sceneIndex);
+    }
+
+    private bool IsValidSceneIndex(int sceneIndex)
+    {
+        return sceneIndex >= 0 && sceneIndex < SceneManager.sceneCountInBuildSettings;
     }
 }
