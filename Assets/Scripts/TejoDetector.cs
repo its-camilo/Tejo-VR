@@ -9,12 +9,14 @@ public class TejoDetector : MonoBehaviour
     [SerializeField] private ParticleSystem smoke1;
     [SerializeField] private ParticleSystem smoke2;
     [SerializeField] private ParticleSystem smoke3;
+    [SerializeField] private GameManager gameManager;
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Barro"))
         {
             Debug.Log("barro tocado");
+            gameManager.AddScore(1);
         }
     }
 
@@ -47,6 +49,8 @@ public class TejoDetector : MonoBehaviour
             }
 
             Debug.Log("Mecha tocada: " + nombreMecha);
+            //+3 puntos
+            gameManager.AddScore(3);
             
             Destroy(other.gameObject);
         }
