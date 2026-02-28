@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,8 +18,11 @@ public class GameManager : MonoBehaviour
     // When disabled, all PlayerPrefs code is skipped and highScore stays at 0.
     [SerializeField] private bool playerPrefsActive = false;
 
-    // Scene references
+    // Scene and UI references
     [SerializeField] private SceneController sceneController;
+    [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private TMP_Text maxScoreText;
+    [SerializeField] private TMP_Text tejosLanzadosText;
 
     private bool gameEnded = false;
 
@@ -34,9 +38,7 @@ public class GameManager : MonoBehaviour
         }
 
         LoadHighScore();
-
-        // TODO: Vincular los valores de puntaje y lanzamientos a elementos de texto de la UI.
-        // TODO: Crear UI persistente en la escena Game que muestre el puntaje más alto (highScore).
+        UpdateUI();
     }
 
     private void Update()
@@ -47,8 +49,9 @@ public class GameManager : MonoBehaviour
             tejosLanzados = 0;
 
             SaveHighScore();
+            UpdateUI();
 
-            // TODO: Mostrar retroalimentación de fin de juego y puntaje final antes de salir de la escena.
+            // TODO: Mostrar retroalimentacion de fin de juego y puntaje final antes de salir de la escena.
             if (sceneController != null)
             {
                 sceneController.PlayMenu();
@@ -59,12 +62,14 @@ public class GameManager : MonoBehaviour
     public void AddScore(int points)
     {
         score += points;
+        UpdateUI();
         Debug.Log("Puntaje actualizado: " + score);
     }
 
     public void IncrementTejosLanzados()
     {
         tejosLanzados++;
+        UpdateUI();
         Debug.Log("Tejos lanzados: " + tejosLanzados);
     }
 
@@ -80,6 +85,8 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt(HighScoreKey, 0);
             PlayerPrefs.Save();
         }
+
+        UpdateUI();
     }
 
     private void SaveHighScore()
@@ -91,7 +98,27 @@ public class GameManager : MonoBehaviour
             highScore = score;
             PlayerPrefs.SetInt(HighScoreKey, highScore);
             PlayerPrefs.Save();
-            Debug.Log("Nuevo puntaje más alto guardado: " + highScore);
+            Debug.Log("Nuevo puntaje mas alto guardado: " + highScore);
+        }
+
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = score.ToString();
+        }
+
+        if (maxScoreText != null)
+        {
+            maxScoreText.text = highScore.ToString();
+        }
+
+        if (tejosLanzadosText != null)
+        {
+            tejosLanzadosText.text = tejosLanzados.ToString();
         }
     }
 }
