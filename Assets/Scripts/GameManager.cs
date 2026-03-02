@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private TMP_Text maxScoreText;
     [SerializeField] private TMP_Text tejosLanzadosText;
+    [SerializeField] private AudioSource feedback;
 
     private bool gameEnded = false;
 
@@ -46,16 +47,11 @@ public class GameManager : MonoBehaviour
         if (tejosLanzados >= MaxTejos && !gameEnded)
         {
             gameEnded = true;
-            tejosLanzados = 0;
 
             SaveHighScore();
             UpdateUI();
 
-            // TODO: Mostrar retroalimentacion de fin de juego y puntaje final antes de salir de la escena.
-            if (sceneController != null)
-            {
-                sceneController.PlayMenu();
-            }
+            Invoke(nameof(PlayEndFeedback), 1f);
         }
     }
 
@@ -121,4 +117,23 @@ public class GameManager : MonoBehaviour
             tejosLanzadosText.text = tejosLanzados.ToString();
         }
     }
+
+    private void PlayEndFeedback()
+    {
+        if (feedback != null)
+        {
+            feedback.Play();
+        }
+
+        Invoke(nameof(ReturnToMenu), 2.5f);
+    }
+
+    private void ReturnToMenu()
+    {
+        if (sceneController != null)
+        {
+            sceneController.PlayMenu();
+        }
+    }
+
 }

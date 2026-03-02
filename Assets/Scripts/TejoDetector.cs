@@ -5,6 +5,7 @@ public class TejoDetector : MonoBehaviour
 {
     // Audio references
     [SerializeField] private AudioSource mechaSound;
+    [SerializeField] private AudioSource SonidoBarro;
 
     // Particle system references
     [SerializeField] private ParticleSystem smoke1;
@@ -80,7 +81,6 @@ public class TejoDetector : MonoBehaviour
         if (gameManager != null)
         {
             gameManager.AddScore(mechaPoints);
-            gameManager.IncrementTejosLanzados();
         }
 
         Destroy(other.gameObject);
@@ -103,10 +103,14 @@ public class TejoDetector : MonoBehaviour
         hasResolvedScore = true;
         Debug.Log("Barro hit");
 
+        if (SonidoBarro != null && SonidoBarro.clip != null)
+        {
+            SonidoBarro.PlayOneShot(SonidoBarro.clip);
+        }
+
         if (gameManager != null)
         {
             gameManager.AddScore(barroPoints);
-            gameManager.IncrementTejosLanzados();
         }
     }
 }
