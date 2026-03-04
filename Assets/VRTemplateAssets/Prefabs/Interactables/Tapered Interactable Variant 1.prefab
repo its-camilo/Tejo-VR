@@ -507,7 +507,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_MaterialPropertyBlockHelper: {fileID: 4635051297981193349}
-  m_ColorPropertyName: _RimColor
+  m_ColorPropertyName: _BaseColor
 --- !u!1001 &8160754106662323259
 PrefabInstance:
   m_ObjectHideFlags: 0

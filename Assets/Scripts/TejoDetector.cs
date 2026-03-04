@@ -80,7 +80,7 @@ public class TejoDetector : MonoBehaviour
         Debug.Log("Mecha hit: " + nombreMecha);
         if (gameManager != null)
         {
-            gameManager.AddScore(mechaPoints);
+            gameManager.AddScore(mechaPoints, true);
         }
 
         Destroy(other.gameObject);
@@ -110,7 +110,7 @@ public class TejoDetector : MonoBehaviour
 
         if (gameManager != null)
         {
-            gameManager.AddScore(barroPoints);
+            gameManager.AddScore(barroPoints, false);
         }
     }
 }
